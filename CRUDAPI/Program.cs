@@ -26,6 +26,8 @@ builder.Services.AddDbContext<Contexto>(options =>
 
 });
 
+builder.Services.AddCors();
+
 
 var app = builder.Build();
 
@@ -36,10 +38,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseCors(opcoes => opcoes.AllowOrigin().AllowAnyMethod().AloowAnyHeader());
+
 app.UseHttpsRedirection();
+
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+
