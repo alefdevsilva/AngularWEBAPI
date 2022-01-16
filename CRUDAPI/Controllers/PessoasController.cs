@@ -31,5 +31,34 @@ namespace CRUDAPI.Controllers
                 return pessoa;
 
         }
+
+         [HttpPost]
+        public async Task<ActionResult<Pessoa>> SalvarPessoaAsync (Pessoa pessoa) {
+            await _contexto.Pessoas.AddAsync (pessoa);
+            await _contexto.SaveChangesAsync ();
+
+            return Ok ();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> AtualizarPessoaAsync (Pessoa pessoa) {
+            _contexto.Pessoas.Update (pessoa);
+            await _contexto.SaveChangesAsync ();
+
+            return Ok ();
+        }
+
+        [HttpDelete ("{Id}")]
+        public async Task<ActionResult> ExcluirPessoaAsync (int Id) {
+            Pessoa pessoa = await _contexto.Pessoas.FindAsync (Id);
+            if (pessoa == null)
+                return NotFound ();
+
+            _contexto.Remove (pessoa);
+            await _contexto.SaveChangesAsync ();
+            return Ok ();
+        }
+
+
     }
 }

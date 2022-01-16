@@ -15,9 +15,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+/*
 builder.Services.AddDbContext<Contexto>(opcoes => opcoes.UseSqlServer("ConexaoBD")
 
 );
+*/
+builder.Services.AddDbContext<Contexto>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoBD"));
+
+});
 
 
 var app = builder.Build();
